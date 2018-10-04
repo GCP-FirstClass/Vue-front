@@ -2,9 +2,10 @@
   <div class="home">
     <slider></slider>
     <div id="under">
-    <img class="main-img" alt="Vue logo" src="../assets/logo.png">
-    <img class="main-img" alt="Vue logo" src="../assets/ox.png">
-    <img class="main-img" alt="Vue logo" src="../assets/Wakeboarder.png">
+      <img class="main-img" alt="Vue logo" src="../assets/logo.png">
+      <img class="main-img" alt="Vue logo" src="../assets/ox.png">
+      <img class="main-img" alt="Vue logo" src="../assets/Wakeboarder.png">
+      <img class="main-img" alt="Vue logo" src="../assets/mergeNum.png">
     </div>
   </div>
 </template>
