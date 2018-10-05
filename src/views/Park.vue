@@ -3,8 +3,8 @@
 </template>
 <style>
     canvas {
-        width: 480px;
-        height: 320px;
+        width: 882px;
+        height: 500px;
         background: #eee;
     }
 </style>
@@ -16,7 +16,7 @@ export default {
             canvas: null,
             ctx: null,
                 ball: {
-                ballRadius: 10,
+                ballRadius: 5,
                 x: 0,
                 y: 0,
                 dx: 2,
@@ -32,13 +32,13 @@ export default {
                 rightPressed: false,
             },
             brickSpec: {
-                brickRowCount: 3,
-                    brickColumnCount: 5,
-                    brickWidth: 75,
-                    brickHeight: 20,
-                    brickPadding: 10,
-                    brickOffsetTop: 30,
-                    brickOffsetLeft: 30,
+                brickRowCount: 7,
+                brickColumnCount: 7,
+                brickWidth: 30,
+                brickHeight: 5,
+                brickPadding: 10,
+                brickOffsetTop: 15,
+                brickOffsetLeft: 15,
             },
             bricks: [],
             score: 0,
@@ -77,14 +77,14 @@ export default {
         this.ball.y = this.canvas.height - 30;
         /* init paddle */
         this.paddle.width = 75;
-        this.paddle.height = 10;
+        this.paddle.height = 5;
         this.paddle.x = (this.canvas.width-this.paddle.width)/2;
         
         this.draw();
     },
     methods: {
         drawBall () {
-        this.ctx.beginPath();
+            this.ctx.beginPath();
             this.ctx.arc(this.ball.x, this.ball.y, this.ball.ballRadius, 0, Math.PI*2);
             this.ctx.fillStyle = "#0095DD";
             this.ctx.fill();
@@ -120,6 +120,7 @@ export default {
         draw () {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.drawScore();
+            this.drawLive();
             this.drawBall();
             this.drawPaddle();
             this.drawBricks();
@@ -139,8 +140,8 @@ export default {
                     this.live--;
 
                     if(!this.live) {
-                        alert("GAME OVER");
-                        document.location.reload();
+                        //alert("GAME OVER");
+                        //document.location.reload();
                     }	else {
                         this.ball.x = this.canvas.width/2;
                         this.ball.y = this.canvas.height-30;
@@ -180,23 +181,27 @@ export default {
                     
                     if (b.status === 1) {
                         if(this.ball.x > b.x && this.ball.x < b.x+this.brickSpec.brickWidth && this.ball.y > b.y && this.ball.y < b.y+this.brickSpec.brickHeight) {
-                        b.status = 0;
-                        this.score++;
-                        this.ball.dy = -this.ball.dy;
+                            b.status = 0;
+                            this.score++;
+                            this.ball.dy = -this.ball.dy;
+                            this.paddlePenalty();
                         }              
                     }
                 }
             }
         },
         drawScore ()  {
-            this.ctx.font = "16px Arial";
+            this.ctx.font = "10px Arial";
             this.ctx.fillStyle = "#0095DD";
-            this.ctx.fillText("Score: "+this.score, 8, 20);
+            this.ctx.fillText("Score: "+this.score, 8, 10);
         },
         drawLive () {
-            this.ctx.font = "16px Arial";
-                this.ctx.fillStyle = "#0095DD";
-                this.ctx.fillText("Lives: "+ this.lives, this.canvas.width-65, 20);
+            this.ctx.font = "10px Arial";
+            this.ctx.fillStyle = "#0095DD";
+            this.ctx.fillText("Lives: "+ this.live, this.canvas.width-65, 10);
+        },
+        paddlePenalty () {
+            this.paddle.width -= 1;
         }
     },
     computed: {
